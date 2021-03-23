@@ -13,6 +13,11 @@
 
   <?php include_once 'templates/navbar.php'; ?>
 
+  <div class="row">
+    <div class="col-6 mx-auto">
+    </div>
+  </div>
+
   <?php include_once 'templates/js-links.php'; ?>
 </body>
 
