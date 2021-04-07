@@ -1,12 +1,3 @@
-
-//Menu lateral
-
-$('#menu').click(function(){
-  $('.sidebar').toggleClass('mostrar-ocultar');
-  console.log('clic');
-});
-
-
 //Monitoreo de datos
 
 function datos() {

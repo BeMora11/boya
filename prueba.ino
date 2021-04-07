@@ -19,17 +19,23 @@ void leer_temperatura()
   //Serial.println(voltaje); 
   //Serial.print("Grados Cº: ");
   float temp=((voltaje)*100);
-  Serial.println(temp);
-  //mysigfox.initpayload();
-  //mysigfox.addfloat(temp);
-  //mysigfox.sendmessage();
+  int oxigen = (temp + 3);
+  int turbidez = (temp + 2 * 3);
+  int dioxido (turbidez * 5);
+  //Serial.println(temp);
+  mysigfox.initpayload();
+  mysigfox.addfloat(temp);
+  mysigfox.addint(oxigen);
+  mysigfox.addint(turbidez);
+  mysigfox.addint(dioxido);
+  mysigfox.sendmessage();
 }
 
 void loop() 
 {
-   // if (digitalRead(boton)==LOW)
-  //{
+  if (digitalRead(boton)==LOW)
+  {
     leer_temperatura();
     delay(2000);
-  //} 
+  } 
 }
