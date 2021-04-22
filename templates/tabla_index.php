@@ -11,10 +11,10 @@ $fila = '';
 foreach ($row as $item) {
   $fila .= '<tr class="text-center">
                 <td>' . strftime("%d/%m/%Y %I:%M %p", strtotime($item['fecha'])) . '</td>
-                <td>' . $item['oxigeno'] . '</td>
-                <td>' . $item['temperatura'] . '</td>
-                <td>' . $item['turbidez'] . '</td>
-                <td>' . $item['dioxido_carbono'] . '</td>
+                <td>' . $item['oxigeno'] . ' O<sub>2</sub>' . '</td>
+                <td>' . $item['temperatura'] . ' °C' . '</td>
+                <td>' . $item['turbidez'] . ' m' . '</td>
+                <td>' . $item['dioxido_carbono'] . ' CO<sub>2</sub>' . '</td>
               </tr>';
 }
 
@@ -26,7 +26,7 @@ foreach ($row as $item) {
       <th>Fecha</th>
       <th>O<sub>2</sub></th>
       <th>°C</th>
-      <th>Mg/l</th>
+      <th>m</th>
       <th>CO<sub>2</sub></th>
     </tr>
   </thead>

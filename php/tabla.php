@@ -2,7 +2,7 @@
   include_once 'conexion.php';
   $conexion = new DB();
 
-  $query = $conexion -> connect() -> query("SELECT * FROM dispositivo WHERE DATE_FORMAT(fecha, '%Y-%m-%d') = CURDATE() ORDER BY fecha ASC");
+  $query = $conexion -> connect() -> query("SELECT * FROM dispositivo ORDER BY fecha ASC");
   $query -> execute();
   $datos = $query -> fetchAll();
 

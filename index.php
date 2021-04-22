@@ -25,7 +25,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#principal"><i class="fas fa-home mr-2"></i>Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="#principal"><i class="fas fa-home mr-2"></i>Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#medidores"><i class="fas fa-weight mr-2"></i>Medidores</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#variables"><i class="fas fa-table mr-2"></i>Variables</a>
@@ -41,7 +44,21 @@
   </nav>
 
   <div class="container">
-    <h4 id="principal" class="my-4 text-center">Monitoreo de variables</h4>
+
+    <div id="principal" class="container col-xxl-8 px-4 py-5">
+      <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+        <div class="col-10 col-sm-8 col-lg-6">
+          <img src="https://www.darrera.com/wp/wp-content/uploads/2018/04/3r-edb200-boya-oceanografica.jpg" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+        </div>
+        <div class="col-lg-6">
+          <h1 class="display-5 fw-bold lh-1 mb-3">Boya para el monitoreo de variables en un entorno marino</h1>
+          <p class="lead">El objetivo de esta aplicación es mostrar al investigador los datos tomados de los sensores integrados en la boya, haciendo uso de la tecnologia Sigfox para el envio de datos capturados y ser mostrados de manera gráfica en esta aplicación, para un historial de registros.</p>
+        </div>
+      </div>
+    </div>
+
+    <h4 id="medidores" class="text-center">Medidores de datos obtenidos por ultima vez</h4>
+
     <div class="card-deck mt-4">
       <div class="card shadow">
         <div class="card-body">
@@ -57,9 +74,6 @@
           <a href="#graficaTemp" class="btn btn-primary btn-block">Ver mas</a>
         </div>
       </div>
-    </div>
-
-    <div class="card-deck mt-2">
       <div class="card shadow">
         <div class="card-body">
           <div class="card-title text-center">Turbidez</div>
@@ -76,36 +90,55 @@
       </div>
     </div>
 
+
+    <div class="row mt-4">
+      <div class="col-sm-12">
+        <div class="alert alert-info shadow" role="alert">
+          Los valores en los medidores se actualizan al ultimo dato recibido desde el dispositivo.
+        </div>
+      </div>
+    </div>
+
     <h4 id="variables" class="my-4 text-center">Variables registradas</h4>
 
-    <div id="tabIndex" class="table-responsive my-4">
+    <div class="card shadow">
+      <div class="card-body">
+        <div id="tabIndex" class="table-responsive my-4">
+        </div>
+      </div>
     </div>
 
     <h4 id="graficas" class="my-4 text-center">Gráficas</h4>
 
     <div class="row mt-2 mb-4">
-      <div class="col-sm-12 col-md-8 mx-auto">
+      <div class="col-sm-12">
+        <div class="alert alert-info shadow" role="alert">
+          Las gráficas se actualizan cada vez que un nuevo dato es enviado desde el dispositivo, y muestran todos los datos recibidos del día actual.
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 mb-4">
         <div class="card shadow">
           <div class="card-body">
             <canvas id="graficaOxigeno"></canvas>
           </div>
         </div>
       </div>
-      <div class="col-sm-12 col-md-8 mx-auto mt-4">
+      <div class="col-sm-12 col-md-6 mb-4">
         <div class="card shadow">
           <div class="card-body">
             <canvas id="graficaTemp"></canvas>
           </div>
         </div>
       </div>
-      <div class="col-sm-12 col-md-8 mx-auto mt-4">
+      <div class="col-sm-12 col-md-6 mb-4">
         <div class="card shadow">
           <div class="card-body">
             <canvas id="graficaTurbidez"></canvas>
           </div>
         </div>
       </div>
-      <div class="col-sm-12 col-md-8 mx-auto mt-4">
+      <div class="col-sm-12 col-md-6 mb-4">
         <div class="card shadow">
           <div class="card-body">
             <canvas id="graficaCO2"></canvas>

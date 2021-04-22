@@ -1,3 +1,4 @@
+
 //Monitoreo de datos
 
 function datos() {
@@ -5,13 +6,13 @@ function datos() {
 }
 
 setInterval(async () => {
-  let res = await fetch("php/variables.php");
+  let res = await fetch("php/tabla.php");
   let data = await res.json();
 
   // console.log(data.length);
   setTimeout(async () => {
     try {
-      let resa = await fetch("php/variables.php");
+      let resa = await fetch("php/tabla.php");
       let dataa = await resa.json();
       if (dataa.length > data.length) {
         datos();
@@ -104,7 +105,7 @@ if (document.getElementById("graficaTemp")) {
   (async () => {
     const res = await fetch("php/variables.php");
     const data = await res.json();
-    // console.log(data);
+    //console.log(data);
 
     let temperatura = [];
     let hora = [];
@@ -277,7 +278,7 @@ if (document.getElementById("graficaOxigeno")) {
                   let hora = [];
 
                   resu.forEach((element) => {
-                    oxigeno.push(element.temperatura);
+                    oxigeno.push(element.oxigeno);
                     hora.push(element.fecha);
                   });
 

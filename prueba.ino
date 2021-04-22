@@ -13,15 +13,18 @@ void setup()
 
 void leer_temperatura()
 {
-  int sensorVal=analogRead(sensorPin);
-  float voltaje=(sensorVal/1024.0)*5;
+  int sensorValue = analogRead(sensorPin);
+  //Serial.println(sensorValue);
+  
+  //int sensorVal=analogRead(sensorPin);
+  float voltaje=(sensorValue/1024.0)*5;
   //Serial.print("Voltaje: ");
   //Serial.println(voltaje); 
   //Serial.print("Grados Cº: ");
   float temp=((voltaje)*100);
-  int oxigen = (temp + 3);
-  int turbidez = (temp + 2 * 3);
-  int dioxido (turbidez * 5);
+  int oxigen = (temp / 3);
+  int turbidez = (temp / 2);
+  int dioxido (turbidez / 5);
   //Serial.println(temp);
   mysigfox.initpayload();
   mysigfox.addfloat(temp);
@@ -36,6 +39,6 @@ void loop()
   if (digitalRead(boton)==LOW)
   {
     leer_temperatura();
-    delay(2000);
+    delay(500);
   } 
 }
