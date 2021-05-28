@@ -21,7 +21,7 @@ foreach ($row as $item) {
 ?>
 
 <table id="tabla_index" class="table table-striped table-sm">
-  <thead class="thead-dark">
+  <thead class="bg-dark">
     <tr class="text-center">
       <th>Fecha</th>
       <th>O<sub>2</sub></th>

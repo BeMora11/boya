@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-04-2021 a las 23:02:47
+-- Tiempo de generación: 28-05-2021 a las 02:14:19
 -- Versión del servidor: 10.4.17-MariaDB
 -- Versión de PHP: 7.4.15
 
@@ -55,7 +55,34 @@ INSERT INTO `dispositivo` (`id_mensaje`, `fecha`, `oxigeno`, `temperatura`, `tur
 (107, '2021-04-05 18:02:24', 21, 23, 84, 12),
 (108, '2021-04-05 18:02:49', 43, 12, 53, 64),
 (109, '2021-04-06 12:05:09', 89, 43, 2.2, 90),
-(110, '2021-04-06 12:05:39', 23, 34, 12, 50);
+(110, '2021-04-06 12:05:39', 23, 34, 12, 50),
+(111, '2021-04-14 16:18:31', 12, 30, 9, 10),
+(112, '2021-04-14 16:24:40', 12, 20, 1, 3),
+(113, '2021-04-14 16:32:04', 12, 13, 4, 7),
+(114, '2021-04-14 16:53:15', 1, 1, 1, 1),
+(115, '2021-04-14 17:02:10', 2, 20, 2, 2),
+(116, '2021-04-14 17:02:25', 4, 26, 22, 24),
+(117, '2021-04-20 17:49:32', 8.2, 30, 5.5, 8.8),
+(118, '2021-04-20 17:50:05', 6.2, 28, 4.5, 7.8);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id_usuario` int(11) NOT NULL,
+  `usuario` varchar(30) NOT NULL,
+  `password_usuario` varchar(120) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id_usuario`, `usuario`, `password_usuario`) VALUES
+(4, 'admin', '$2y$10$18z1s6/au0xnxebCatge1OTF7g5XvCvZ4UeTCiOfvRbSk2r4tLQl.');
 
 --
 -- Índices para tablas volcadas
@@ -68,6 +95,12 @@ ALTER TABLE `dispositivo`
   ADD PRIMARY KEY (`id_mensaje`);
 
 --
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id_usuario`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -75,7 +108,13 @@ ALTER TABLE `dispositivo`
 -- AUTO_INCREMENT de la tabla `dispositivo`
 --
 ALTER TABLE `dispositivo`
-  MODIFY `id_mensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+  MODIFY `id_mensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
