@@ -21,9 +21,9 @@ foreach ($row as $item) {
 ?>
 
 <table id="tabla_index" class="table table-striped table-sm">
-  <thead class="bg-dark">
+  <thead class="table-dark">
     <tr class="text-center">
-      <th>Fecha</th>
+      <th>Fecha del mensaje</th>
       <th>O<sub>2</sub></th>
       <th>°C</th>
       <th>m</th>

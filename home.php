@@ -21,6 +21,7 @@ if (!isset($_SESSION['user'])) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard</title>
+  <link rel="icon" href="assets/img/monitoreo.png" type="image/png">
   <?php include_once 'templates/resources-head.php' ?>
   <!-- Google fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -37,91 +38,117 @@ if (!isset($_SESSION['user'])) {
 
   <div class="container">
 
-    <h4 id="medidores" class="text-center my-4">Datos registrados</h4>
-
-    <div class="row mt-4">
-      <div class="card col-sm-12 col-md-2 mb-2 mx-auto shadow">
-        <div class="card-body text-center">
-          <div class="card-title">Oxígeno</div>
-          <div id="oxigeno" class="mx-auto my-2" style="width: 120px; height: 120px;"></div>
-          <div class="d-grid gap-2">
-            <a href="#graficaOxigeno" class="btn btn-primary btn-block">Ver mas</a>
-          </div>
-        </div>
-      </div>
-      <div class="card col-sm-12 col-md-2 mb-2 mx-auto shadow">
-        <div class="card-body text-center">
-          <div class="card-title">Temperatura</div>
-          <div id="temperatura" class="mx-auto my-2" style="width: 120px; height: 120px;"></div>
-          <div class="d-grid gap-2">
-            <a href="#graficaTemp" class="btn btn-primary btn-block">Ver mas</a>
-          </div>
-        </div>
-      </div>
-      <div class="card col-sm-12 col-md-2 mb-2 mx-auto shadow">
-        <div class="card-body text-center">
-          <div class="card-title">Turbidez</div>
-          <div id="turbidez" class="mx-auto my-2" style="width: 120px; height: 120px;"></div>
-          <div class="d-grid gap-2">
-            <a href="#graficaTurbidez" class="btn btn-primary btn-block">Ver mas</a>
-          </div>
-        </div>
-      </div>
-      <div class="card col-sm-12 col-md-2 mb-2 mx-auto shadow">
-        <div class="card-body text-center">
-          <div class="card-title">CO2</div>
-          <div id="co2" class="mx-auto my-2" style="width: 120px; height: 120px;"></div>
-          <div class="d-grid gap-2">
-            <a href="#graficaCO2" class="btn btn-primary btn-block">Ver mas</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="row mt-4">
-      <div class="col-sm-12">
-        <div class="alert alert-info shadow" role="alert">
-          Los valores en los medidores se actualizan al ultimo dato recibido desde el dispositivo.
-        </div>
-      </div>
-    </div>
-
-    <h4 id="graficas" class="my-4 text-center">Gráficas</h4>
+    <h2 id="graficas" class="my-4 text-center">Gráficas</h2>
 
     <div class="row mt-2 mb-4">
-      <div class="col-sm-12">
-        <div class="alert alert-info shadow" role="alert">
-          Las gráficas se actualizan cada vez que un nuevo dato es enviado desde el dispositivo, y muestran todos los datos recibidos del día actual.
+
+      <div class="col-sm-12 mb-4">
+        <h4 class="text-center">Oxigeno</h4>
+        <div class="row">
+          <div class="col-sm-12 col-md-4">
+            <div class="card shadow-sm mb-2">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-6">
+                    <img src="assets/img/oxigeno.png" class="" width="120" height="auto" alt="">
+                  </div>
+                  <div class="col-6" id="oxigeno">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-8">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <input onchange="renderOxigeno()" type="date" value="<?php echo date('Y-m-d') ?>" class="form-control mb-2" name="fecha" id="fechaOxigen">
+                <canvas id="graficaOxigeno"></canvas>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="col-sm-12 mb-4">
-        <div class="card shadow">
-          <div class="card-body">
-            <h5 class="card-title text-center mb-2">Oxígeno</h5>
-            <canvas id="graficaOxigeno"></canvas>
+        <h4 class="text-center">Temperatura</h4>
+        <div class="row">
+          <div class="col-sm-12 col-md-4">
+            <div class="card shadow-sm mb-2">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-6">
+                    <img src="assets/img/temp.png" class="" width="120" height="auto" alt="">
+                  </div>
+                  <div class="col-6" id="temp">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-8 mb-2">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <input onchange="renderTemp()" type="date" value="<?php echo date('Y-m-d') ?>" class="form-control mb-2" name="fecha" id="fechaTemp">
+                <canvas id="graficaTemp"></canvas>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+
       <div class="col-sm-12 mb-4">
-        <div class="card shadow">
-          <div class="card-body">
-            <canvas id="graficaTemp"></canvas>
+        <h4 class="text-center">Turbidez</h4>
+        <div class="row">
+          <div class="col-sm-12 col-md-4">
+            <div class="card shadow-sm mb-2">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-6">
+                    <img src="assets/img/turbidez.png" class="" width="120" height="auto" alt="">
+                  </div>
+                  <div class="col-6" id="turbidez">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-8">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <input onchange="renderTurb()" type="date" value="<?php echo date('Y-m-d') ?>" class="form-control mb-2" name="fecha" id="fechaTurb">
+                <canvas id="graficaTurbidez"></canvas>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
       <div class="col-sm-12 mb-4">
-        <div class="card shadow">
-          <div class="card-body">
-            <canvas id="graficaTurbidez"></canvas>
+        <h4 class="text-center">CO<sub>2</sub></h4>
+        <div class="row">
+          <div class="col-sm-12 col-md-4">
+            <div class="card shadow-sm mb-2">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-6">
+                    <img src="assets/img/co2.jpg" class="" width="120" height="auto" alt="">
+                  </div>
+                  <div class="col-6" id="co2">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="col-sm-12 mb-4">
-        <div class="card shadow">
-          <div class="card-body">
-            <canvas id="graficaCO2"></canvas>
+          <div class="col-sm-12 col-md-8">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <input onchange="renderCO2()" type="date" value="<?php echo date('Y-m-d') ?>" class="form-control mb-2" name="fecha" id="fechaCO2">
+                <canvas id="graficaCO2"></canvas>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
-
 //Monitoreo de datos
+
+// Tabla de datos
 
 function datos() {
   $("#tabIndex").load("templates/tabla_index.php");
@@ -7,14 +8,14 @@ function datos() {
 
 setInterval(async () => {
   let res = await fetch("php/tabla.php");
-  let data = await res.json();
+  let dataT = await res.json();
 
   // console.log(data.length);
   setTimeout(async () => {
     try {
       let resa = await fetch("php/tabla.php");
       let dataa = await resa.json();
-      if (dataa.length > data.length) {
+      if (dataa.length > dataT.length) {
         datos();
       }
     } catch (err) {
@@ -23,526 +24,365 @@ setInterval(async () => {
   }, 1000);
 }, 1000);
 
-//Gauges de la pagina principañ
-if (
-  document.getElementById("oxigeno") &&
-  document.getElementById("temperatura") &&
-  document.getElementById("turbidez") &&
-  document.getElementById("co2")
-) {
-  google.charts.load("current", { packages: ["gauge"] });
-  google.charts.load("current", { packages: ["line"] });
-  google.charts.setOnLoadCallback(drawChart);
+//Ultimo dato obtenido de oxigeno
 
-  async function drawChart() {
-    let res = await fetch("php/consulta_variables.php");
-    let data = await res.json();
+const oxigeno = document.getElementById('oxigeno');
+const temp = document.getElementById('temp');
+const turbidez = document.getElementById('turbidez');
+const co2 = document.getElementById('co2');
 
-    var oxigeno = google.visualization.arrayToDataTable([
-      ["Label", "Value"],
-      ["Oxígeno", data.oxigeno],
-    ]);
-    var temperatura = google.visualization.arrayToDataTable([
-      ["Label", "Value"],
-      ["Temperatura", data.temperatura],
-    ]);
-    var turbidez = google.visualization.arrayToDataTable([
-      ["Label", "Value"],
-      ["Turbidez", data.turbidez],
-    ]);
-    var co2 = google.visualization.arrayToDataTable([
-      ["Label", "Value"],
-      ["CO2", data.dioxido_carbono],
-    ]);
-
-    var options = {
-      width: 400,
-      height: 120,
-      redFrom: 90,
-      redTo: 100,
-      yellowFrom: 75,
-      yellowTo: 90,
-      minorTicks: 5,
-    };
-
-    var chartOxigeno = new google.visualization.Gauge(
-      document.getElementById("oxigeno")
-    );
-    var chartTemperatura = new google.visualization.Gauge(
-      document.getElementById("temperatura")
-    );
-    var chartTurbidez = new google.visualization.Gauge(
-      document.getElementById("turbidez")
-    );
-    var chartCO2 = new google.visualization.Gauge(
-      document.getElementById("co2")
-    );
-
-    chartOxigeno.draw(oxigeno, options);
-    chartTemperatura.draw(temperatura, options);
-    chartTurbidez.draw(turbidez, options);
-    chartCO2.draw(co2, options);
-
-    setInterval(async () => {
-      let res = await fetch("php/consulta_variables.php");
-      let data = await res.json();
-      oxigeno.setValue(0, 1, data.oxigeno);
-      chartOxigeno.draw(oxigeno, options);
-      temperatura.setValue(0, 1, data.temperatura);
-      chartTemperatura.draw(temperatura, options);
-      turbidez.setValue(0, 1, data.turbidez);
-      chartTurbidez.draw(turbidez, options);
-      co2.setValue(0, 1, data.dioxido_carbono);
-      chartCO2.draw(co2, options);
-      // console.log(data.temperatura);
-    }, 5000);
-  }
-}
-
-// Grafica para temperatura
-
-if (document.getElementById("graficaTemp")) {
-  (async () => {
-    const res = await fetch("php/variables.php");
-    const data = await res.json();
-    //console.log(data);
-
-    let temperatura = [];
-    let hora = [];
-
-    data.forEach((element) => {
-      temperatura.push(element.temperatura);
-      hora.push(element.fecha);
-    });
-
-    const grafica = document.getElementById("graficaTemp");
-    const datos = {
-      label: "Temperatura °C",
-      // Pasar los datos igualmente desde PHP
-      data: temperatura, // <- Aquí estamos pasando el valor traído usando AJAX
-      backgroundColor: "rgba(255, 87, 51 , 0.2)", // Color de fondo
-      borderColor: "rgba(255, 74, 35 , 1)", // Color del borde
-      borderWidth: 1, // Ancho del borde
-    };
-
-    new Chart(grafica, {
-      type: "line", // Tipo de gráfica
-      data: {
-        labels: hora,
-        datasets: [
-          datos,
-          // Aquí más datos...
-        ],
-      },
-      options: {
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-              },
-            },
-          ],
-        },
-      },
-    });
-
-    // Actualizar grafica
-
-    setInterval(() => {
-      $.ajax({
-        type: "GET",
-        url: "php/variables.php",
-        success: function (r) {
-          let resn = JSON.parse(r);
-          setTimeout(() => {
-            $.ajax({
-              type: "GET",
-              url: "php/variables.php",
-              success: function (r) {
-                let resu = JSON.parse(r);
-                if (resu.length > resn.length) {
-                  let temperatura = [];
-                  let hora = [];
-
-                  resu.forEach((element) => {
-                    temperatura.push(element.temperatura);
-                    hora.push(element.fecha);
-                  });
-
-                  const grafica = document.getElementById("graficaTemp");
-                  const datos = {
-                    label: "Temperatura °C",
-                    // Pasar los datos igualmente desde PHP
-                    data: temperatura, // <- Aquí estamos pasando el valor traído usando AJAX
-                    backgroundColor: "rgba(255, 87, 51 , 0.2)", // Color de fondo
-                    borderColor: "rgba(255, 74, 35 , 1)", // Color del borde
-                    borderWidth: 1, // Ancho del borde
-                  };
-
-                  new Chart(grafica, {
-                    type: "line", // Tipo de gráfica
-                    data: {
-                      labels: hora,
-                      datasets: [
-                        datos,
-                        // Aquí más datos...
-                      ],
-                    },
-                    options: {
-                      scales: {
-                        yAxes: [
-                          {
-                            ticks: {
-                              beginAtZero: true,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  });
-                }
-              },
-            });
-          }, 1000);
-        },
-      });
-    }, 1000);
-  })();
+if (oxigeno) {
+  setInterval(() => {
+    fetch('php/ultimos_datos.php')
+      .then(r => r.json())
+      .then(r => {
+        // console.log(r.oxigeno)
+        oxigeno.innerHTML = `<h4 class="mt-4">${r.oxigeno} O<sub>2</sub></h4>
+                             <h6>${r.fecha}</h6>`;
+        temp.innerHTML = `<h4 class="mt-4">${r.temperatura} °C</h4>
+                             <h6>${r.fecha}</h6>`;
+        turbidez.innerHTML = `<h4 class="mt-4">${r.turbidez} m</h4>
+                             <h6>${r.fecha}</h6>`;
+        co2.innerHTML = `<h4 class="mt-4">${r.dioxido_carbono} CO<sub>2</sub></h4>
+                             <h6>${r.fecha}</h6>`;
+      })
+      .catch(err => console.error(err));
+  }, 1000);
 }
 
 // Grafica para oxigeno
 
-if (document.getElementById("graficaOxigeno")) {
-  (async () => {
-    const res = await fetch("php/variables.php");
-    const data = await res.json();
-    // console.log(data);
+const graficaOxigeno = document.getElementById('graficaOxigeno');
 
-    let oxigeno = [];
-    let hora = [];
+if (graficaOxigeno) {
 
-    data.forEach((element) => {
-      oxigeno.push(element.oxigeno);
-      hora.push(element.fecha);
-    });
+  const labels = [];
+  const dataOxigen = [];
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Oxigeno',
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(255, 99, 132)',
+      data: dataOxigen,
+    }]
+  };
 
-    const grafica = document.getElementById("graficaOxigeno");
-    const datos = {
-      label: "Oxígeno",
-      // Pasar los datos igualmente desde PHP
-      data: oxigeno, // <- Aquí estamos pasando el valor traído usando AJAX
-      backgroundColor: "rgba(54, 162, 235, 0.2)", // Color de fondo
-      borderColor: "rgba(54, 162, 235, 1)", // Color del borde
-      borderWidth: 1, // Ancho del borde
-    };
+  const config = {
+    type: 'line',
+    data,
+    options: {}
+  };
 
-    new Chart(grafica, {
-      type: "line", // Tipo de gráfica
-      data: {
-        labels: hora,
-        datasets: [
-          datos,
-          // Aquí más datos...
-        ],
-      },
-      options: {
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-              },
-            },
-          ],
-        },
-      },
-    });
+  var oxigenChart = new Chart(
+    graficaOxigeno,
+    config
+  );
 
-    // Actualizar grafica
+  function renderOxigeno() {
+    let fecha = document.getElementById('fechaOxigen').value;
+    let dataFecha = new FormData();
 
-    setInterval(() => {
-      $.ajax({
-        type: "GET",
-        url: "php/variables.php",
-        success: function (r) {
-          let resn = JSON.parse(r);
-          setTimeout(() => {
-            $.ajax({
-              type: "GET",
-              url: "php/variables.php",
-              success: function (r) {
-                let resu = JSON.parse(r);
-                if (resu.length > resn.length) {
-                  let oxigeno = [];
-                  let hora = [];
+    dataFecha.append('fecha', fecha);
 
-                  resu.forEach((element) => {
-                    oxigeno.push(element.oxigeno);
-                    hora.push(element.fecha);
-                  });
+    fetch('php/datos_graficas.php', {
+        method: 'POST',
+        body: dataFecha
+      })
+      .then(r => r.json())
+      .then(r => {
+        // console.log(r)
 
-                  const grafica = document.getElementById("graficaOxigeno");
-                  const datos = {
-                    label: "Oxígeno",
-                    // Pasar los datos igualmente desde PHP
-                    data: oxigeno, // <- Aquí estamos pasando el valor traído usando AJAX
-                    backgroundColor: "rgba(54, 162, 235, 0.2)", // Color de fondo
-                    borderColor: "rgba(54, 162, 235, 1)", // Color del borde
-                    borderWidth: 1, // Ancho del borde
-                  };
+        if (r.length > 0) {
+          for (let i = labels.length; i > 0; i--) {
+            labels.pop();
+            for (let j = dataOxigen.length; j > 0; j--) {
+              dataOxigen.pop();
+            }
+          }
 
-                  new Chart(grafica, {
-                    type: "line", // Tipo de gráfica
-                    data: {
-                      labels: hora,
-                      datasets: [
-                        datos,
-                        // Aquí más datos...
-                      ],
-                    },
-                    options: {
-                      scales: {
-                        yAxes: [
-                          {
-                            ticks: {
-                              beginAtZero: true,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  });
-                }
-              },
-            });
-          }, 1000);
-        },
-      });
-    }, 1000);
-  })();
+          r.map(item => {
+            dataOxigen.push(item.oxigeno);
+            labels.push(item.fecha);
+            oxigenChart.update();
+          });
+
+          // console.log(dataOxigen)
+        } else {
+          for (let i = labels.length; i > 0; i--) {
+            labels.pop();
+            for (let j = dataOxigen.length; j > 0; j--) {
+              dataOxigen.pop();
+            }
+          }
+
+          oxigenChart.update();
+
+          // console.log('No hay datos')
+        }
+      })
+      .catch(err => console.error(err));
+  }
+
+  renderOxigeno();
+
 }
 
-//Grafica para CO2
+// Grafica para temperatura
 
-if (document.getElementById("graficaCO2")) {
-  (async () => {
-    const res = await fetch("php/variables.php");
-    const data = await res.json();
-    // console.log(data);
+const graficaTemp = document.getElementById('graficaTemp');
 
-    let co2 = [];
-    let hora = [];
+if (graficaTemp) {
 
-    data.forEach((element) => {
-      co2.push(element.dioxido_carbono);
-      hora.push(element.fecha);
-    });
+  const labels = [];
+  const dataTemp = [];
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Temperatura',
+      backgroundColor: 'rgb(102, 123, 255)',
+      borderColor: 'rgb(102, 123, 255)',
+      data: dataTemp,
+    }]
+  };
 
-    const grafica = document.getElementById("graficaCO2");
-    const datos = {
-      label: "CO2",
-      // Pasar los datos igualmente desde PHP
-      data: co2, // <- Aquí estamos pasando el valor traído usando AJAX
-      backgroundColor: "rgba(54, 162, 235, 0.2)", // Color de fondo
-      borderColor: "rgba(54, 162, 235, 1)", // Color del borde
-      borderWidth: 1, // Ancho del borde
-    };
+  const config = {
+    type: 'line',
+    data,
+    options: {}
+  };
 
-    new Chart(grafica, {
-      type: "line", // Tipo de gráfica
-      data: {
-        labels: hora,
-        datasets: [
-          datos,
-          // Aquí más datos...
-        ],
-      },
-      options: {
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-              },
-            },
-          ],
-        },
-      },
-    });
+  var tempChart = new Chart(
+    graficaTemp,
+    config
+  );
 
-    // Actualizar grafica
+  function renderTemp() {
+    let fecha = document.getElementById('fechaTemp').value;
+    let dataFecha = new FormData();
 
-    setInterval(() => {
-      $.ajax({
-        type: "GET",
-        url: "php/variables.php",
-        success: function (r) {
-          let resn = JSON.parse(r);
-          setTimeout(() => {
-            $.ajax({
-              type: "GET",
-              url: "php/variables.php",
-              success: function (r) {
-                let resu = JSON.parse(r);
-                if (resu.length > resn.length) {
-                  let co2 = [];
-                  let hora = [];
+    dataFecha.append('fecha', fecha);
 
-                  resu.forEach((element) => {
-                    co2.push(element.dioxido_carbono);
-                    hora.push(element.fecha);
-                  });
+    fetch('php/datos_graficas.php', {
+        method: 'POST',
+        body: dataFecha
+      })
+      .then(r => r.json())
+      .then(r => {
+        // console.log(r)
 
-                  const grafica = document.getElementById("graficaCO2");
-                  const datos = {
-                    label: "CO2",
-                    // Pasar los datos igualmente desde PHP
-                    data: co2, // <- Aquí estamos pasando el valor traído usando AJAX
-                    backgroundColor: "rgba(54, 162, 235, 0.2)", // Color de fondo
-                    borderColor: "rgba(54, 162, 235, 1)", // Color del borde
-                    borderWidth: 1, // Ancho del borde
-                  };
+        if (r.length > 0) {
+          for (let i = labels.length; i > 0; i--) {
+            labels.pop();
+            for (let j = dataTemp.length; j > 0; j--) {
+              dataTemp.pop();
+            }
+          }
 
-                  new Chart(grafica, {
-                    type: "line", // Tipo de gráfica
-                    data: {
-                      labels: hora,
-                      datasets: [
-                        datos,
-                        // Aquí más datos...
-                      ],
-                    },
-                    options: {
-                      scales: {
-                        yAxes: [
-                          {
-                            ticks: {
-                              beginAtZero: true,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  });
-                }
-              },
-            });
-          }, 1000);
-        },
-      });
-    }, 1000);
-  })();
+          r.map(item => {
+            dataTemp.push(item.temperatura);
+            labels.push(item.fecha);
+            tempChart.update();
+          });
+
+          // console.log(dataOxigen)
+        } else {
+          for (let i = labels.length; i > 0; i--) {
+            labels.pop();
+            for (let j = dataTemp.length; j > 0; j--) {
+              dataTemp.pop();
+            }
+          }
+
+          tempChart.update();
+
+          // console.log('No hay datos')
+        }
+      })
+      .catch(err => console.error(err))
+  }
+
+  renderTemp();
 }
 
-//Grafica para Turbidez
+// Grafica para turbidez
 
-if (document.getElementById("graficaTurbidez")) {
-  (async () => {
-    const res = await fetch("php/variables.php");
-    const data = await res.json();
-    // console.log(data);
+const graficaTurbidez = document.getElementById('graficaTurbidez');
 
-    let turbidez = [];
-    let hora = [];
+if (graficaTurbidez) {
 
-    data.forEach((element) => {
-      turbidez.push(element.turbidez);
-      hora.push(element.fecha);
-    });
+  const labels = [];
+  const dataTurb = [];
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Turbidez',
+      backgroundColor: 'rgb(102, 255, 167)',
+      borderColor: 'rgb(102, 255, 167)',
+      data: dataTurb,
+    }]
+  };
 
-    const grafica = document.getElementById("graficaTurbidez");
-    const datos = {
-      label: "Turbidez",
-      // Pasar los datos igualmente desde PHP
-      data: turbidez, // <- Aquí estamos pasando el valor traído usando AJAX
-      backgroundColor: "rgba(54, 162, 235, 0.2)", // Color de fondo
-      borderColor: "rgba(54, 162, 235, 1)", // Color del borde
-      borderWidth: 1, // Ancho del borde
-    };
+  const config = {
+    type: 'line',
+    data,
+    options: {}
+  };
 
-    new Chart(grafica, {
-      type: "line", // Tipo de gráfica
-      data: {
-        labels: hora,
-        datasets: [
-          datos,
-          // Aquí más datos...
-        ],
-      },
-      options: {
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-              },
-            },
-          ],
-        },
-      },
-    });
+  var turbChart = new Chart(
+    graficaTurbidez,
+    config
+  );
 
-    // Actualizar grafica
+  function renderTurb() {
+    let fecha = document.getElementById('fechaTurb').value;
+    let dataFecha = new FormData();
 
-    setInterval(() => {
-      $.ajax({
-        type: "GET",
-        url: "php/variables.php",
-        success: function (r) {
-          let resn = JSON.parse(r);
-          setTimeout(() => {
-            $.ajax({
-              type: "GET",
-              url: "php/variables.php",
-              success: function (r) {
-                let resu = JSON.parse(r);
-                if (resu.length > resn.length) {
-                  let turbidez = [];
-                  let hora = [];
+    dataFecha.append('fecha', fecha);
 
-                  resu.forEach((element) => {
-                    turbidez.push(element.turbidez);
-                    hora.push(element.fecha);
-                  });
+    fetch('php/datos_graficas.php', {
+        method: 'POST',
+        body: dataFecha
+      })
+      .then(r => r.json())
+      .then(r => {
+        // console.log(r)
 
-                  const grafica = document.getElementById("graficaTurbidez");
-                  const datos = {
-                    label: "Turbidez",
-                    // Pasar los datos igualmente desde PHP
-                    data: turbidez, // <- Aquí estamos pasando el valor traído usando AJAX
-                    backgroundColor: "rgba(54, 162, 235, 0.2)", // Color de fondo
-                    borderColor: "rgba(54, 162, 235, 1)", // Color del borde
-                    borderWidth: 1, // Ancho del borde
-                  };
+        if (r.length > 0) {
+          for (let i = labels.length; i > 0; i--) {
+            labels.pop();
+            for (let j = dataTurb.length; j > 0; j--) {
+              dataTurb.pop();
+            }
+          }
 
-                  new Chart(grafica, {
-                    type: "line", // Tipo de gráfica
-                    data: {
-                      labels: hora,
-                      datasets: [
-                        datos,
-                        // Aquí más datos...
-                      ],
-                    },
-                    options: {
-                      scales: {
-                        yAxes: [
-                          {
-                            ticks: {
-                              beginAtZero: true,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  });
-                }
-              },
-            });
-          }, 1000);
-        },
-      });
-    }, 1000);
-  })();
+          r.map(item => {
+            dataTurb.push(item.turbidez);
+            labels.push(item.fecha);
+            turbChart.update();
+          });
+
+          // console.log(dataOxigen)
+        } else {
+          for (let i = labels.length; i > 0; i--) {
+            labels.pop();
+            for (let j = dataTurb.length; j > 0; j--) {
+              dataTurb.pop();
+            }
+          }
+
+          turbChart.update();
+
+          // console.log('No hay datos')
+        }
+      })
+      .catch(err => console.error(err))
+  }
+
+  renderTurb();
 }
+
+// Grafica para CO2
+
+const graficaCO2 = document.getElementById('graficaCO2');
+
+if (graficaCO2) {
+
+  const labels = [];
+  const dataCO2 = [];
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'CO2',
+      backgroundColor: 'rgb(255, 246, 102)',
+      borderColor: 'rgb(255, 246, 102)',
+      data: dataCO2,
+    }]
+  };
+
+  const config = {
+    type: 'line',
+    data,
+    options: {}
+  };
+
+  var co2Chart = new Chart(
+    graficaCO2,
+    config
+  );
+
+  function renderCO2() {
+    let fecha = document.getElementById('fechaCO2').value;
+    let dataFecha = new FormData();
+
+    dataFecha.append('fecha', fecha);
+
+    fetch('php/datos_graficas.php', {
+        method: 'POST',
+        body: dataFecha
+      })
+      .then(r => r.json())
+      .then(r => {
+        // console.log(r)
+
+        if (r.length > 0) {
+          for (let i = labels.length; i > 0; i--) {
+            labels.pop();
+            for (let j = dataCO2.length; j > 0; j--) {
+              dataCO2.pop();
+            }
+          }
+
+          r.map(item => {
+            dataCO2.push(item.dioxido_carbono);
+            labels.push(item.fecha);
+            co2Chart.update();
+          });
+
+          // console.log(dataOxigen)
+        } else {
+          for (let i = labels.length; i > 0; i--) {
+            labels.pop();
+            for (let j = dataCO2.length; j > 0; j--) {
+              dataCO2.pop();
+            }
+          }
+
+          co2Chart.update();
+
+          // console.log('No hay datos')
+        }
+      })
+      .catch(err => console.error(err))
+  }
+
+  renderCO2();
+}
+
+// Actualizacion en tiempo real de las graficas
+
+setInterval(async () => {
+  try {
+    let response = await fetch('php/total_datos.php');
+    let data = await response.json();
+    let longitud = data;
+
+    // console.log(longitud)
+    // console.log(data)
+
+    setTimeout(async () => {
+      let newResponse = await fetch('php/total_datos.php');
+      let newData = await newResponse.json();
+
+      if (newData > longitud) {
+        renderCO2();
+        renderOxigeno();
+        renderTemp();
+        renderTurb();
+      }
+    }, 1000);
+
+  } catch (err) {
+    console.error(err);
+  }
+}, 1000);

@@ -13,6 +13,7 @@ if (isset($_SESSION['user'])) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="assets/img/monitoreo.png" type="image/png">
   <title>Iniciar sesión</title>
   <?php include_once 'templates/resources-head.php' ?>
   <!-- Google fonts -->
@@ -26,7 +27,7 @@ if (isset($_SESSION['user'])) {
 
   <div class="login-container">
     <div class="login">
-      <div class="card">
+      <div class="card shadow-sm">
         <div class="card-body">
           <h5 class="card-title text-center my-3">Acceder</h5>
           <form id="login">
@@ -47,7 +48,7 @@ if (isset($_SESSION['user'])) {
                 </div>
               </div>
               <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                <button type="submit" class="btn btn-sm btn-success">Iniciar sesión</button>
               </div>
             </div>
           </form>
