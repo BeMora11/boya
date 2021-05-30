@@ -1,4 +1,16 @@
-//Monitoreo de datos
+// Animación de carga
+
+window.addEventListener('load', function(){
+
+  carga();
+
+  function carga(){
+    document.getElementById('loading').className = 'visually-hidden';
+    document.getElementById('content').classList.remove('visually-hidden');
+  }
+});
+
+// Monitoreo de datos
 
 // Tabla de datos
 

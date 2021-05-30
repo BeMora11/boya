@@ -21,13 +21,19 @@ if (isset($_SESSION['user'])) {
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
   <!-- Custom CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 
 <body>
-
   <div class="login-container">
     <div class="login">
-      <div class="card shadow-sm">
+      <div class="text-center" id="loading">
+        <div class="spinner-border mt-5" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      <div class="card shadow-sm animate__animated animate__backInDown visually-hidden" id="content">
         <div class="card-body">
           <h5 class="card-title text-center my-3">Acceder</h5>
           <form id="login">
