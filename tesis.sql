@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-05-2021 a las 02:14:19
+-- Tiempo de generación: 17-06-2021 a las 23:31:47
 -- Versión del servidor: 10.4.17-MariaDB
 -- Versión de PHP: 7.4.15
 
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `tesis`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `coordenadas`
+--
+
+CREATE TABLE `coordenadas` (
+  `id_mensaje` int(11) NOT NULL,
+  `fecha` datetime NOT NULL,
+  `latitud` float NOT NULL,
+  `longitud` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -63,7 +76,15 @@ INSERT INTO `dispositivo` (`id_mensaje`, `fecha`, `oxigeno`, `temperatura`, `tur
 (115, '2021-04-14 17:02:10', 2, 20, 2, 2),
 (116, '2021-04-14 17:02:25', 4, 26, 22, 24),
 (117, '2021-04-20 17:49:32', 8.2, 30, 5.5, 8.8),
-(118, '2021-04-20 17:50:05', 6.2, 28, 4.5, 7.8);
+(118, '2021-04-20 17:50:05', 6.2, 28, 4.5, 7.8),
+(119, '2021-05-29 23:34:11', 12, 43, 42, 12),
+(120, '2021-05-29 23:36:34', 56, 23, 12, 43),
+(121, '2021-05-29 23:59:07', 8.2, 28, 5.5, 2.4),
+(122, '2021-05-29 23:59:36', 9.2, 34, 10.5, 7.4),
+(123, '2021-05-30 00:05:36', 2.2, 37, 5.1, 8.7),
+(124, '2021-05-30 00:06:28', 6.2, 40, 2.1, 4.7),
+(125, '2021-05-30 00:06:47', 1, 25, 12, 8),
+(126, '2021-05-30 00:07:30', 11, 32, 16, 18);
 
 -- --------------------------------------------------------
 
@@ -89,6 +110,12 @@ INSERT INTO `usuarios` (`id_usuario`, `usuario`, `password_usuario`) VALUES
 --
 
 --
+-- Indices de la tabla `coordenadas`
+--
+ALTER TABLE `coordenadas`
+  ADD PRIMARY KEY (`id_mensaje`);
+
+--
 -- Indices de la tabla `dispositivo`
 --
 ALTER TABLE `dispositivo`
@@ -105,10 +132,16 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `coordenadas`
+--
+ALTER TABLE `coordenadas`
+  MODIFY `id_mensaje` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `dispositivo`
 --
 ALTER TABLE `dispositivo`
-  MODIFY `id_mensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+  MODIFY `id_mensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

@@ -18,6 +18,10 @@ function datos() {
   $("#tabIndex").load("templates/tabla_index.php");
 }
 
+function datosCoordenadas() {
+  $("#tabCoordenadas").load("templates/tabla_coordenadas.php");
+}
+
 setInterval(async () => {
   let res = await fetch("php/tabla.php");
   let dataT = await res.json();

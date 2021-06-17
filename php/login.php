@@ -4,12 +4,6 @@
   include_once 'conexion.php';
   $conexion = new DB();
 
-  // $password = password_hash('admin', PASSWORD_DEFAULT);
-  // $usuario = 'admin';
-
-  // $query = $conexion -> connect() -> query("INSERT INTO usuarios(usuario, password_usuario) VALUES('$usuario', '$password')");
-  // echo $query -> execute();
-
   $usuario = $_POST['usuario'];
   $password = $_POST['password'];
 

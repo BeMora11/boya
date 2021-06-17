@@ -45,7 +45,7 @@ if (!isset($_SESSION['user'])) {
 
     <div class="container">
 
-      <h4 id="variables" class="my-4 text-center">Variables registradas</h4>
+      <h4 class="my-4 text-center">Variables registradas</h4>
 
       <div class="card shadow mb-4">
         <div class="card-body">
@@ -54,13 +54,20 @@ if (!isset($_SESSION['user'])) {
         </div>
       </div>
 
+      <h4 class="my-4 text-center">Coordenadas</h4>
+
+      <div class="card shadow mb-4">
+        <div class="card-body">
+          <div id="tabCoordenadas" class="table-responsive my-4">
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <h4 id="localizacion" class="my-4 text-center">Localización</h4>
+    <h4 class="my-4 text-center">Localización</h4>
 
-    <div class="mx-2">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d120658.78462148654!2d-104.40118245708027!3d19.081886823596676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1smaps!5e0!3m2!1ses!2smx!4v1615316219504!5m2!1ses!2smx" width="100%" height="450" style="border:0;" allowfullscreen="" class="my-3" loading="lazy"></iframe>
-    </div>
+    <div id="map" class="mx-2" style="height: 300px;"></div>
 
     <footer class="bg-dark">
       <div class="text-center text-white py-4">
@@ -73,8 +80,27 @@ if (!isset($_SESSION['user'])) {
 
 
   <?php include_once 'templates/js-links.php' ?>
+
   <script type="text/javascript">
     datos();
+    datosCoordenadas();
+
+    function iniciarMap() {
+      var coord = {
+        lat: -34.5956145,
+        lng: -58.4431949
+      };
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: coord
+      });
+      var marker = new google.maps.Marker({
+        position: coord,
+        map: map
+      });
+    }
+  </script>
+  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSWjNRJdjcKyVfPgym0tcqMISTdRc2Tls&callback=iniciarMap">
   </script>
 </body>
 

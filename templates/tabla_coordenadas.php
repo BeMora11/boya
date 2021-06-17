@@ -2,7 +2,7 @@
 include_once '../php/conexion.php';
 $conexion = new DB();
 
-$query = $conexion->connect()->query("SELECT * FROM dispositivo ORDER BY id_mensaje ASC");
+$query = $conexion->connect()->query("SELECT * FROM coordenadas ORDER BY id_mensaje ASC");
 $query->execute();
 $row = $query->fetchAll();
 
@@ -12,24 +12,20 @@ foreach ($row as $item) {
   $fila .= '<tr class="text-center">
                 <td>' . $item['id_mensaje'] . '</td>
                 <td>' . strftime("%d/%m/%Y %I:%M %p", strtotime($item['fecha'])) . '</td>
-                <td>' . $item['oxigeno'] . ' O<sub>2</sub>' . '</td>
-                <td>' . $item['temperatura'] . ' °C' . '</td>
-                <td>' . $item['turbidez'] . ' m' . '</td>
-                <td>' . $item['dioxido_carbono'] . ' CO<sub>2</sub>' . '</td>
+                <td>' . $item['latitud'] . '</td>
+                <td>' . $item['longitud'] . '</td>
               </tr>';
 }
 
 ?>
 
-<table id="tabla_index" class="table table-striped table-sm">
+<table id="tabla_coordenadas" class="table table-striped table-sm">
   <thead class="table-dark">
     <tr class="text-center">
       <th>ID mensaje</th>
       <th>Fecha del mensaje</th>
-      <th>O<sub>2</sub></th>
-      <th>°C</th>
-      <th>m</th>
-      <th>CO<sub>2</sub></th>
+      <th>Latitud</th>
+      <th>Longitud</th>
     </tr>
   </thead>
   <tbody>
@@ -38,7 +34,7 @@ foreach ($row as $item) {
 </table>
 
 <script type="text/javascript">
-  $('#tabla_index').DataTable({
+  $('#tabla_coordenadas').DataTable({
     dom: 'Bfrtip',
     buttons: [
       'excel',
