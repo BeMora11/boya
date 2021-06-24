@@ -53,8 +53,8 @@ if (!isset($_SESSION['user'])) {
           </div>
         </div>
       </div>
-
-      <h4 class="my-4 text-center">Coordenadas</h4>
+      
+      <h4 id="variables" class="my-4 text-center">Coordenadas</h4>
 
       <div class="card shadow mb-4">
         <div class="card-body">
@@ -65,9 +65,9 @@ if (!isset($_SESSION['user'])) {
 
     </div>
 
-    <h4 class="my-4 text-center">Localización</h4>
+    <h4 id="localizacion" class="my-4 text-center">Localización</h4>
 
-    <div id="map" class="mx-2" style="height: 300px;"></div>
+    <div id="map" class="m-2" style="height: 500px;"></div>
 
     <footer class="bg-dark">
       <div class="text-center text-white py-4">
@@ -80,15 +80,18 @@ if (!isset($_SESSION['user'])) {
 
 
   <?php include_once 'templates/js-links.php' ?>
-
   <script type="text/javascript">
     datos();
     datosCoordenadas();
-
+    
     function iniciarMap() {
-      var coord = {
-        lat: -34.5956145,
-        lng: -58.4431949
+        
+      fetch('php/coordenadas.php')
+      .then(r => r.json())
+      .then(r => {
+          var coord = {
+        lat: r.latitud,
+        lng: r.longitud
       };
       var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 10,
@@ -98,10 +101,12 @@ if (!isset($_SESSION['user'])) {
         position: coord,
         map: map
       });
+      })
+      .catch(err => console.error(err));
     }
+    
   </script>
   <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSWjNRJdjcKyVfPgym0tcqMISTdRc2Tls&callback=iniciarMap">
-  </script>
 </body>
 
 </html>

@@ -11,9 +11,9 @@
 
         public function __construct(){
             $this->host     = 'localhost';
-            $this->db       = 'tesis';
-            $this->user     = 'root';
-            $this->password = '';
+            $this->db       = 'id16310820_pruebas';
+            $this->user     = 'id16310820_tesis';
+            $this->password = ')Vsk(AqM9(5Sf)@M';
             $this->charset  = 'utf8mb4';
         }
 

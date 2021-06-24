@@ -33,6 +33,7 @@ setInterval(async () => {
       let dataa = await resa.json();
       if (dataa.length > dataT.length) {
         datos();
+        datosCoordenadas();
       }
     } catch (err) {
       console.log(err);
@@ -47,6 +48,11 @@ const temp = document.getElementById('temp');
 const turbidez = document.getElementById('turbidez');
 const co2 = document.getElementById('co2');
 
+const oxigenop = document.getElementById('oxigenop');
+const tempp = document.getElementById('tempp');
+const turbidezp = document.getElementById('turbidezp');
+const co2p = document.getElementById('co2p');
+
 if (oxigeno) {
   setInterval(() => {
     fetch('php/ultimos_datos.php')
@@ -60,6 +66,15 @@ if (oxigeno) {
         turbidez.innerHTML = `<h4 class="mt-4">${r.turbidez} m</h4>
                              <h6>${r.fecha}</h6>`;
         co2.innerHTML = `<h4 class="mt-4">${r.dioxido_carbono} CO<sub>2</sub></h4>
+                             <h6>${r.fecha}</h6>`;
+                             
+        oxigenop.innerHTML = `<h4 class="mt-4">${r.oxigeno} O<sub>2</sub></h4>
+                             <h6>${r.fecha}</h6>`;
+        tempp.innerHTML = `<h4 class="mt-4">${r.temperatura} °C</h4>
+                             <h6>${r.fecha}</h6>`;
+        turbidezp.innerHTML = `<h4 class="mt-4">${r.turbidez} m</h4>
+                             <h6>${r.fecha}</h6>`;
+        co2p.innerHTML = `<h4 class="mt-4">${r.dioxido_carbono} CO<sub>2</sub></h4>
                              <h6>${r.fecha}</h6>`;
       })
       .catch(err => console.error(err));

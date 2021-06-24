@@ -52,6 +52,15 @@ void leer_datos(){
   int dioxido (turbidez / 5);
   //Serial.println(temp);
 
+  Serial.println("Temperatura: ");
+  Serial.println(temp);
+  Serial.println("Oxigeno: ");
+  Serial.println(oxigen);
+  Serial.println("Turbidez: ");
+  Serial.println(turbidez);
+  Serial.println("CO2: ");
+  Serial.println(dioxido);
+
   //Envio de mensajes
   mysigfox.initpayload();
   mysigfox.addint(temp);
@@ -67,7 +76,7 @@ void loop(){
     if(gps.encode(c)){
       coordenadas();
       leer_datos();
-      delay(5000);
+      delay(30000);
     }
   }
 }

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="home.php"><img src="https://icon-library.com/images/icon-dashboard/icon-dashboard-9.jpg" width="40px" alt=""></a>
+    <a class="navbar-brand" href="home.php"><img src="https://seeklogo.com/images/U/universidad-de-colima-ucol-logo-B8E49C427B-seeklogo.com.png" width="40px" class="me-2" alt="">Facultad de Ingeniería Electromecánica</a>
     <div>
       <ul class="nav">
         <li class="nav-item dropdown">
